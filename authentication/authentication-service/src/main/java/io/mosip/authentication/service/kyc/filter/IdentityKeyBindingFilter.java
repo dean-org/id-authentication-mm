@@ -72,7 +72,7 @@ public class IdentityKeyBindingFilter extends IdAuthFilter {
 
 	@Override
 	protected boolean isTrustValidationRequired() {
-		return true;
+		return false;
 	}
 	
 	@Override
