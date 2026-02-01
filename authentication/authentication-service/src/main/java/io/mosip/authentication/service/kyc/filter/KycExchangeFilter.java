@@ -71,7 +71,7 @@ public class KycExchangeFilter extends IdAuthFilter {
 
 	@Override
 	protected boolean isTrustValidationRequired() {
-		return true;
+		return false;
 	}
 	
 	@Override
