@@ -81,10 +81,18 @@ public class IdentityKeyBindingServiceImpl implements IdentityKeyBindingService 
     @Override
     public String createAndSaveKeyBindingCertificate(IdentityKeyBindingRequestDTO identityKeyBindingRequestDTO,
             Map<String, List<IdentityInfoDTO>> identityInfo, String token, String partnerId) throws IdAuthenticationBusinessException {
+		logger.info(IdAuthCommonConstants.SESSION_ID,
+            this.getClass().getSimpleName(),
+            "createAndSaveKeyBindingCertificate",
+            "IdentityInfo Map received: {}", identityInfo);
 
         Map<String, Object> publicKeyJWK = identityKeyBindingRequestDTO.getIdentityKeyBinding().getPublicKeyJWK();
         PublicKey publicKey = createPublicKeyObject(publicKeyJWK);
         String identityName = getIdentityNameData(identityInfo);
+		logger.info(IdAuthCommonConstants.SESSION_ID,
+            this.getClass().getSimpleName(),
+            "createAndSaveKeyBindingCertificate",
+            "Extracted identityName: '{}'", identityName);
         if (identityName.trim().length() == 0) {
             logger.error(IdAuthCommonConstants.SESSION_ID, this.getClass().getSimpleName(), "createKeyBindingCertificate",
                                     "Identity Name is not available for the default language code.");
