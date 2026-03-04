@@ -15,6 +15,7 @@ on:
   push:
     branches:
       - myanmar
+      - multi-lang-Wallet
 
 jobs:
   build-maven-authentication:
