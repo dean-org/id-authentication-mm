@@ -50,8 +50,8 @@ public class IdentityKeyBindingServiceImpl implements IdentityKeyBindingService 
     /** The logger. */
 	private static Logger logger = IdaLogger.getLogger(IdentityKeyBindingServiceImpl.class);
 
-    @Value("${mosip.ida.key.binding.name.default.langCode:bur}")
-	private String defaultLangCode;
+    @Value("#{'${mosip.ida.key.binding.name.default.langCodes:eng,bur}'.split(',')}")
+	private List<String> defaultLangCodes;
     
     @Value("${mosip.ida.key.binding.certificate.validity.in.days:90}")
 	private int certificateValidityDays;
@@ -167,7 +167,7 @@ public class IdentityKeyBindingServiceImpl implements IdentityKeyBindingService 
         for (String idName: idNames) {
             List<IdentityInfoDTO> idInfoList = identityInfo.get(idName);
             for (IdentityInfoDTO identityInfoData : idInfoList) {
-                if (identityInfoData.getLanguage().equalsIgnoreCase(defaultLangCode)) {
+                if (defaultLangCodes.stream().anyMatch(lang -> lang.equalsIgnoreCase(identityInfoData.getLanguage()))) {
                     if (strBuilder.length() > 0) 
                         strBuilder.append(" ");
                     strBuilder.append(identityInfoData.getValue());
