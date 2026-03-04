@@ -50,7 +50,7 @@ public class IdentityKeyBindingServiceImpl implements IdentityKeyBindingService 
     /** The logger. */
 	private static Logger logger = IdaLogger.getLogger(IdentityKeyBindingServiceImpl.class);
 
-    @Value("${mosip.ida.key.binding.name.default.langCode:eng}")
+    @Value("${mosip.ida.key.binding.name.default.langCode:bur}")
 	private String defaultLangCode;
     
     @Value("${mosip.ida.key.binding.certificate.validity.in.days:90}")
