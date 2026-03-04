@@ -18,7 +18,7 @@ on:
 
 jobs:
   build-maven-authentication:
-    uses: mosip/kattu/.github/workflows/maven-build.yml@master
+    uses: ./.github/workflows/maven-build.yaml
     with:
       SERVICE_LOCATION: ./authentication
       BUILD_ARTIFACT: authentication
@@ -59,7 +59,7 @@ jobs:
             BUILD_ARTIFACT: 'authentication'
       fail-fast: false
     name: ${{ matrix.SERVICE_NAME }}
-    uses: ./.github/workflows/maven-build.yml
+    uses: mosip/kattu/.github/workflows/docker-build.yml@master
     with:
       SERVICE_LOCATION: ${{ matrix.SERVICE_LOCATION }}
       SERVICE_NAME: ${{ matrix.SERVICE_NAME }}
