@@ -47,7 +47,7 @@ public class AuthTransactionHelper {
     @Value("${mosip.esignet.authenticator.ida.app-id}")
     private String appId;
 	
-    @Cacheable(value = AUTH_TOKEN_CACHE, key = "#root.target.AUTH_TOKEN_CACHE_KEY")
+    @Cacheable(value = AUTH_TOKEN_CACHE, key = "'auth_token'")
     public String getAuthToken() throws Exception {
     	log.info("Started to get auth-token with appId : {} && clientId : {}",
                 appId, clientId);
