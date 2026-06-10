@@ -138,6 +138,11 @@ public class VciFacadeImpl implements VciFacade {
 			// Will implement later the consent claims based on credential definition input
 			List<String> consentAttributes = Collections.emptyList();  
 			List<String> allowedConsentAttributes = exchangeDataAttributesUtil.filterAllowedUserClaims(oidcClientId, consentAttributes);
+			
+			mosipLogger.info(IdAuthCommonConstants.SESSION_ID,
+			    this.getClass().getSimpleName(),
+			    "processVciExchange",
+			    "allowedConsentAttributes = " + allowedConsentAttributes);
 
 			PolicyDTO policyDto = policyDtoOpt.get();
 			List<String> policyAllowedKycAttribs = Optional.ofNullable(policyDto.getAllowedKycAttributes()).stream()
@@ -145,11 +150,23 @@ public class VciFacadeImpl implements VciFacade {
 
 			Set<String> filterAttributes = new HashSet<>();
 			exchangeDataAttributesUtil.mapConsentedAttributesToIdSchemaAttributes(allowedConsentAttributes, filterAttributes, policyAllowedKycAttribs);
+			mosipLogger.info(IdAuthCommonConstants.SESSION_ID,
+			    this.getClass().getSimpleName(),
+			    "processVciExchange",
+			    "filterAttributes = " + filterAttributes);
 			Set<String> policyAllowedAttributes = exchangeDataAttributesUtil.filterByPolicyAllowedAttributes(filterAttributes, policyAllowedKycAttribs);
+			mosipLogger.info(
+			    IdAuthCommonConstants.SESSION_ID,
+			    this.getClass().getSimpleName(),
+			    "processVciExchange",
+			    "policyAllowedAttributes = " + policyAllowedAttributes);
 
 			boolean isBioRequired = false;
-			if (filterAttributes.contains(CbeffDocType.FACE.getType().value().toLowerCase()) || 
-						filterAttributes.contains(IdAuthCommonConstants.PHOTO.toLowerCase())) {
+			if (filterAttributes.contains("facerawimage")) {
+			    policyAllowedAttributes.add("facerawimage");
+			    isBioRequired = true;
+			} elseif (filterAttributes.contains(CbeffDocType.FACE.getType().value().toLowerCase()) || 
+						filterAttributes.contains(IdAuthCommonConstants.PHOTO.toLowerCase())||) {
 				policyAllowedAttributes.add(CbeffDocType.FACE.getType().value().toLowerCase());
 				isBioRequired = true;
 			}
