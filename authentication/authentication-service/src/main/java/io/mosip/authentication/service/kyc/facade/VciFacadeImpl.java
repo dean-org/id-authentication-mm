@@ -162,7 +162,7 @@ public class VciFacadeImpl implements VciFacade {
 			    "policyAllowedAttributes = " + policyAllowedAttributes);
 
 			boolean isBioRequired = false;
-			if (filterAttributes.contains("facerawimage")) {
+			if (filterAttributes.contains("faceRawImage")) {
 			    policyAllowedAttributes.add("facerawimage");
 			    isBioRequired = true;
 			} 
