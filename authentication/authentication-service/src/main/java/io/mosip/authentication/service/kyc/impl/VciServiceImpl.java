@@ -395,6 +395,23 @@ public class VciServiceImpl implements VciService {
 				}
 				continue;
 			}
+			if (attrib.equalsIgnoreCase("faceRawImage")) {
+			    // idInfo will have "faceRawImage" key because we passed it in policyAllowedAttributes
+			    // and IdServiceImpl fetched + decrypted it from biometricData map in identity_cache
+			    List<IdentityInfoDTO> faceRawImageInfoList = idInfo.get("faceRawImage");
+			    if (Objects.nonNull(faceRawImageInfoList) && !faceRawImageInfoList.isEmpty()) {
+			        try {
+			            String cbeffData = faceRawImageInfoList.get(0).getValue();
+			            String face = convertJP2ToJpeg(getFaceBDB(cbeffData));
+			            if (Objects.nonNull(face))
+			                credSubjectMap.put("faceRawImage", consentedPictureAttributePrefix + face);
+			        } catch (Exception e) {
+			            mosipLogger.error(IdAuthCommonConstants.SESSION_ID, this.getClass().getSimpleName(), "",
+			                    "Error Adding faceRawImage to the claims. " + e.getMessage(), e);
+			        }
+			    }
+			    continue;
+			}
 			List<String> idSchemaAttributes = idInfoHelper.getIdentityAttributesForIdName(attrib);
 			for (String idSchemaAttribute : idSchemaAttributes) {
 				List<IdentityInfoDTO> idInfoList = idInfo.get(idSchemaAttribute);
