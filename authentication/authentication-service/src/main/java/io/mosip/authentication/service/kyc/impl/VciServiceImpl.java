@@ -401,8 +401,11 @@ public class VciServiceImpl implements VciService {
 			    List<IdentityInfoDTO> faceRawImageInfoList = idInfo.get("faceRawImage");
 			    if (Objects.nonNull(faceRawImageInfoList) && !faceRawImageInfoList.isEmpty()) {
 			        try {
-			            String cbeffData = faceRawImageInfoList.get(0).getValue();
-			            String face = convertJP2ToJpeg(cbeffData);
+			            String faceRawImageData = faceRawImageInfoList.get(0).getValue();
+						String standardBase64 = faceRawImageData
+		                    .replace('-', '+')
+		                    .replace('_', '/');
+			            String face = convertJP2ToJpeg(standardBase64);
 			            if (Objects.nonNull(face))
 			                credSubjectMap.put("faceRawImage", consentedPictureAttributePrefix + face);
 			        } catch (Exception e) {
