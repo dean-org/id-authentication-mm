@@ -163,7 +163,7 @@ public class VciFacadeImpl implements VciFacade {
 
 			boolean isBioRequired = false;
 			if (filterAttributes.contains("faceRawImage")) {
-			    policyAllowedAttributes.add(CbeffDocType.FACE.getType().value().toLowerCase());
+			    policyAllowedAttributes.add("faceRawImage");
 			    isBioRequired = true;
 			} 
 			else if (filterAttributes.contains(CbeffDocType.FACE.getType().value().toLowerCase()) || 
